@@ -1,0 +1,12 @@
+{
+    "characters": [
+        {
+            "name": "Bilbo Baggins",
+            "modifier": 3
+        },
+        {
+            "name": "Smeagol",
+            "modifier": -1
+        }
+    ]
+}
