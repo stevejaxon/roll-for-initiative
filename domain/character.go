@@ -16,7 +16,7 @@ const (
 type Character struct {
 	Name               string `json:"name"`
 	InitiativeModifier int    `json:"modifier"`
-	Initiative         int
+	Initiative         int    `json:"-"`
 }
 
 // Roll generates the initiative roll for a character - based on a D20
