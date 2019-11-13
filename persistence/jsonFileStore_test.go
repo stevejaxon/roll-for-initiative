@@ -2,6 +2,7 @@ package persistence
 
 import (
 	"fmt"
+	"path/filepath"
 	"testing"
 
 	"github.com/stevejaxon/roll-for-initiative/domain"
@@ -86,6 +87,25 @@ func TestCreateCalledMultipleTimes(t *testing.T) {
 		if match := compareCharacters(testCases[i], &actual); !match {
 			t.Fatalf("expected that the retrieved character would match the created one")
 		}
+	}
+}
+
+func TestGetAllCharacters(t *testing.T) {
+	// Setup
+	dbPath := filepath.Join("..", "testdata", "characterdb.json")
+	db := &JSONCharacterStore{
+		DBFilePath: dbPath,
+	}
+
+	// Test
+	storedChars, err := db.RetrieveAllCharacters()
+
+	// Validate
+	if err != nil {
+		t.Fatalf("expected that it would be possible to retrieve the characters recently created: %v", err)
+	}
+	if len(storedChars) != 2 {
+		t.Fatalf("expected that the number of retrieved would match the number of characters recently created: %v", err)
 	}
 }
 
