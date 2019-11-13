@@ -42,6 +42,24 @@ func (store *JSONCharacterStore) Create(character *domain.Character) error {
 	return store.storeDataInDB(db, characters)
 }
 
+// RetrieveAllCharacters retrieves all of the data from the database
+// Due to the small number of expected characters for simplicity we just retrieve them all.
+func (store *JSONCharacterStore) RetrieveAllCharacters() ([]domain.Character, error) {
+	db, isNew, err := store.openDB()
+	if err != nil {
+		return nil, fmt.Errorf("error retrieving all of the characters: %v", err)
+	}
+	defer db.Close()
+	if isNew {
+		return []domain.Character{}, nil
+	}
+	characters, err := store.loadDataFromDB(db)
+	if err != nil {
+		return nil, fmt.Errorf("error retrieving all of the characters: %v", err)
+	}
+	return characters.Characters, nil
+}
+
 func (store *JSONCharacterStore) openDB() (*os.File, bool, error) {
 	_, err := os.Stat(store.DBFilePath)
 	if err != nil {
@@ -80,7 +98,7 @@ func (store *JSONCharacterStore) storeDataInDB(db *os.File, data *ResultSet) err
 	if err != nil {
 		return fmt.Errorf("error whilst storing the data in the DB: %v", err)
 	}
-	_, err = db.Write(json)
+	_, err = db.WriteAt(json, 0)
 	return err
 }
 
