@@ -12,6 +12,7 @@ func TestCreateFirstCharacter(t *testing.T) {
 	// Setup
 	const dbPath = "/tmp/first_character.json"
 	character := &domain.Character{
+		Owner:              "Test0",
 		Name:               "Test1",
 		InitiativeModifier: 1,
 	}
@@ -48,18 +49,22 @@ func TestCreateCalledMultipleTimes(t *testing.T) {
 	}
 	testCases := []*domain.Character{
 		&domain.Character{
+			Owner:              "Owner1",
 			Name:               "Test1",
 			InitiativeModifier: -1,
 		},
 		&domain.Character{
+			Owner:              "Owner2",
 			Name:               "Test2",
 			InitiativeModifier: 10,
 		},
 		&domain.Character{
+			Owner:              "Owner3",
 			Name:               "Test3",
 			InitiativeModifier: -10,
 		},
 		&domain.Character{
+			Owner:              "Owner4",
 			Name:               "Test4",
 			InitiativeModifier: 3,
 		},
@@ -110,12 +115,16 @@ func TestGetAllCharacters(t *testing.T) {
 }
 
 func compareCharacters(expected *domain.Character, actual *domain.Character) bool {
+	if expected.Owner != actual.Owner {
+		fmt.Printf("characters' owners do no match - expected %s, but got %s\n", expected.Name, actual.Name)
+		return false
+	}
 	if expected.Name != actual.Name {
-		fmt.Printf("characters names do no match - expected %s, but got %s\n", expected.Name, actual.Name)
+		fmt.Printf("characters' names do no match - expected %s, but got %s\n", expected.Name, actual.Name)
 		return false
 	}
 	if expected.InitiativeModifier != actual.InitiativeModifier {
-		fmt.Printf("characters initiative modifiers do no match - expected %d, but got %d\n", expected.InitiativeModifier, actual.InitiativeModifier)
+		fmt.Printf("characters' initiative modifiers do no match - expected %d, but got %d\n", expected.InitiativeModifier, actual.InitiativeModifier)
 		return false
 	}
 	return true

@@ -1,10 +1,12 @@
 {
     "characters": [
         {
+            "owner": "Foo Bar",
             "name": "Bilbo Baggins",
             "modifier": 3
         },
         {
+            "owner": "Test",
             "name": "Smeagol",
             "modifier": -1
         }

@@ -14,6 +14,7 @@ const (
 
 // Character holds the initiative-related state of a D&D character
 type Character struct {
+	Owner              string `json:"owner"`
 	Name               string `json:"name"`
 	InitiativeModifier int    `json:"modifier"`
 	Initiative         int    `json:"-"`
